@@ -1,27 +1,36 @@
 ---
-title: "Article Long Title"
+title: "Measuring pavement smoothness using eScooters in Provo, Utah"
 author:
   - name: Gregory Macfarlane
     email: gregmacfarlane@byu.edu
-    affiliation: Brigham Young University
+    affiliation: BYU
     footnote: 1
-  - name: Cosmo Cougar
-    email: bob@example.com
-    affiliation: Brigham Young University
-  - name: Masters Student
-    email: cat@example.com
-    affiliation: Brigham Young University
-    footnote: 2
+  - name: Dylan Apelu
+    email: 
+    affiliation: BYU
+  - name: Nicole Adams
+    email: 
+    affiliation: BYU
+  - name: Liv Neeley
+    email: 
+    affiliation: BYU
+  - name: Stephen Brown
+    email: 
+    affiliation: BYUEE
+  - name: Brian Mazzeo
+    email: 
+    affiliation: BYUEE
+  - name: Spencer Guthrie
+    email: 
+    affiliation: BYU 
 address:
-  - code: Brigham Young University
-    address: Civil and Environmental Engineering Department, 430 Engineering Building, Provo, Utah 84602
-  - code: Another University
-    address: Some Other Place
+  - code: BYU
+    address: Civil and Construction Engineering Department, Brigham Young University, 430 Engineering Building, Provo, Utah 84602
+  - code: BYUEE
+    address: Electrical and Computer Engineering Department, Brigham Young University, 410 Engineering Building, Provo, Utah 84602
 footnote:
   - code: 1
     text: "Corresponding Author"
-  - code: 2
-    text: "Present affiliation: some nice job"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: article
@@ -31,12 +40,11 @@ biblio-style: apalike
 link-citations: yes
 abstract: |
   This is where the abstract should go.
-description: "A short description"
+description: "Pavements and eScooters"
 layout: "3p, authoryear"
 keywords:
-  - Accessibility
-  - Passive Data
-  - Location Choice
+  - Pavement vibrations
+  - eScooters
 ---
 
 # Introduction {#intro}
