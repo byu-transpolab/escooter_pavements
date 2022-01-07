@@ -36,7 +36,7 @@ site: bookdown::bookdown_site
 documentclass: article
 journal: "Submitted to Journal"
 bibliography: [book.bib]
-biblio-style: apalike
+csl: elsevier-harvard-italics.csl
 link-citations: yes
 abstract: |
   This is where the abstract should go.
