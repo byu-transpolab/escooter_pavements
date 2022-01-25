@@ -1,0 +1,2 @@
+id;cpath;mgeom
+0;;LINESTRING()
