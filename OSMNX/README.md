@@ -5,5 +5,3 @@ Maps downloaded from OSMnx automatically meet the requirements for FMM.
 
 To install OSMnx follow these [instructions](https://osmnx.readthedocs.io/en/stable/#installation).
   -Note: Our OSMnx.py script works only for version 0.15.0
-
-Run [OSMnx.py](./OSMnx.py)
