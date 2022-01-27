@@ -4,7 +4,7 @@ Install map matching program with C++ and Python following these [instructions](
 
 -Note: We found the Ubuntu software to be successful in running the FMM program.
 
-The map network of Provo, Utah using [OSMnx.py](../OSMnx/OSMnx.py) is compatible with FMM [input](https://fmm-wiki.github.io/docs/documentation/input/).
+The map network of Provo, Utah using [OSMnx.py](../OSMNX/OSMNX.py) is compatible with FMM [input](https://fmm-wiki.github.io/docs/documentation/input/).
 
 ### Running the FMM program
 
