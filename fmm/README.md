@@ -13,4 +13,4 @@ GPS Points will need to be a GDAL trajectory file, a CSV trajectory file or CSV 
 If both the network and the gps data are projected in meters, a search radius (r) of `300` corresponds to 300 meters in reality.\
 In this example we use a GDAL trajectory file:
 
-`stmatch --network ./data/edges.shp --gps ./gps_linestring.shp -k 10 -r 40 -e 1 --output mr.txt --source u --target v --gps_id ID --network_idd osmid --reverse_tolerance 1`
+`stmatch --network ./example_data/edges.shp --gps ./example_data/gps_linestring.shp -k 10 -r 40 -e 1 --output mr.txt --source u --target v --gps_id ID --network_idd osmid --reverse_tolerance 1`
