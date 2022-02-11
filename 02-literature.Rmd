@@ -18,3 +18,6 @@ Literature reviews do not have a specific guidelines for length or number of
 citations. It's more about making a rhetorical argument; if it's a new problem
 then the review can be shorter. But you'll need to refer to previous attempts at
 the problem, the methods you are trying, and other things.
+
+@zhang2021type analyzed the e-scooter route choice for a system deployed in 
+Blacksburg, Virginia.
