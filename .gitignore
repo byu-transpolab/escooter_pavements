@@ -8,3 +8,9 @@
 *.spl
 
 _bookdown_files/
+
+_targets/
+
+data/MM_NetworkDataset_06032021.gdb/
+
+data/provo_bikes/
