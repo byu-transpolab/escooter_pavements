@@ -8,3 +8,5 @@
 *.spl
 
 _bookdown_files/
+
+rosm.cache/
