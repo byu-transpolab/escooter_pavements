@@ -8,16 +8,31 @@ library(tarchetypes)
 # and tar_read(summary) to view the results.
 
 # Set target-specific options such as packages.
-tar_option_set(packages = c("tidyverse", "bookdown"))
+tar_option_set(packages = c("tidyverse", "bookdown", "sf"))
 
 # Define custom functions and other global objects.
 # This is where you write source(\"R/functions.R\")
 # if you keep your functions in external scripts.
 source("R/functions.R")
+source("R/build_linknode_tables.R")
+source("R/join_segments_data.R")
+
+
+bounding_box <- "data/provo_bb.geojson"
+output_folder <- "data/provo_bikes"
 
 
 # Targets necessary to build your data and run your model
 data_targets <- list(
+  
+  tar_target(gdb, download_gdb("data/MM_NetworkDataset_06032021.gdb"), 
+             format = "file"),
+  tar_target(bb,  st_read(bounding_box)),
+  tar_target(linknodes, extract_roads(bb, gdb)),
+  
+  tar_target(write, write_linknodes(linknodes, output_folder,26912), 
+             format = "file"),
+  
   tar_target(data, data.frame(x = sample.int(100), y = sample.int(100))),
   tar_target(summary, summ(data)) # Call your custom functions as needed.
 )
@@ -26,7 +41,6 @@ data_targets <- list(
 
 # Targets necessary to build the book / article
 book_targets <- list(
-  tar_target(report, rmarkdown::)
 )
 
 
