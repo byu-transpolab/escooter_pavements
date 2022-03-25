@@ -45,13 +45,14 @@ read_gnss <- function(file){
   # [1] "TimestampGNSS [ns]" " UTC time [ms]"     " Lat [deg]"         " Lon [deg]"        
   # [5] " Height [m]"        " Speed [m/s]"       " Heading [deg]"     " Hor Acc [m]"      
   # [9] " Vert Acc [m]"      " Speed Acc [m/s]"   " Heading Acc [deg]"
-  gnss <- read_delim(file, delim= ";") %>%
+  gnss <- read_delim(file, delim= ";", col_types = list(
+    `TimestampGNSS [ns]` = col_character()
+  )) %>%
     set_names("timestamp", "timestampUTC", "lat", "lng", "height", "speed", 
               "heading", "y_acc", "z_acc", "x_acc", "heading_acc")
   
-  
   if(nrow(gnss) == 0){
-    warning("GNSS contains no information")
+    warning(str_c("GNSS", file, "contains no information"))
   } else {
     gnss <- gnss %>%
     mutate(
