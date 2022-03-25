@@ -64,16 +64,21 @@ read_gnss <- function(file){
 }
 
 #' Plot the gnss data from one scooter
-plot_gnss <- function(gnss){
+plot_gnss <- function(gnss, leaflet = FALSE){
   sf <- st_as_sf(gnss, coords = c("lng", "lat"), crs = 4326) 
+  
+  if(leaflet){
+    pal <- colorNumeric("reds", gnss$speed)
+    leaflet(sf) %>%
+      addProviderTiles(providers$CartoDB.DarkMatter) %>%
+      addCircleMarkers(color = "red")
     
-  pal <- colorNumeric("reds", gnss$speed)
-  leaflet(sf) %>%
-    addProviderTiles(providers$CartoDB.DarkMatter) %>%
-    addCircleMarkers(color = "red")
+  }  else {
     
-  ggplot(sf, aes(color = speed)) +
-    annotation_map_tile("cartodark", zoom = 2) + 
-    geom_sf()
+    ggplot(sf, aes(color = speed)) +
+      annotation_map_tile("cartodark", zoom = 12) + 
+      geom_sf()
+    
+  }
     
 }
