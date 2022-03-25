@@ -63,7 +63,7 @@ read_gnss <- function(file){
   gnss
 }
 
-#' Plot the gnss data from one scooter
+#' Plot the gnss data from one path
 plot_gnss <- function(gnss, leaflet = FALSE){
   sf <- st_as_sf(gnss, coords = c("lng", "lat"), crs = 4326) 
   

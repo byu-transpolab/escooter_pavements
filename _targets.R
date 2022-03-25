@@ -14,6 +14,7 @@ tar_option_set(packages = c("tidyverse", "bookdown", "sf"))
 # This is where you write source(\"R/functions.R\")
 # if you keep your functions in external scripts.
 source("R/pavement_data.R")
+source("R/figures.R")
 source("R/build_linknode_tables.R")
 source("R/join_segments_data.R")
 
@@ -34,7 +35,9 @@ data_targets <- list(
              format = "file"),
   
   # targets to make pavement data ---------
-  tar_target(links_pavements, make_link_pavement_data("data/pavement_data/"))
+  tar_target(links_pavements, make_link_pavement_data("data/pavement_data/")),
+  
+  tar_target(all_points_sf, make_point_sf(links_pavements))
 )
 
 
