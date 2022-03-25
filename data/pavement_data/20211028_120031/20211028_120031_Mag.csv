@@ -1,0 +1,3 @@
+Sensor: mmc5603x Magnetometer Non-wakeup
+Vendor: memsic
+TimestampMag [ns]; MagX [uT]; MagY [uT]; MagZ [uT]

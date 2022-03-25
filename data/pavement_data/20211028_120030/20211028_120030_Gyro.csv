@@ -1,0 +1,4 @@
+Sensor: bmi160 Gyroscope Non-wakeup
+Vendor: BOSCH
+TimestampGyro [ns]; GyroX [rad/s]; GyroY [rad/s]; GyroZ [rad/s]
+5088667056584249;-0.0011;-0.0067;-0.0007;

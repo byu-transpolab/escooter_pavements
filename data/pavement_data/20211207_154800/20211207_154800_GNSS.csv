@@ -1,0 +1,2 @@
+TimestampGNSS [ns]; UTC time [ms]; Lat [deg]; Lon [deg]; Height [m]; Speed [m/s]; Heading [deg]; Hor Acc [m]; Vert Acc [m]; Speed Acc [m/s]; Heading Acc [deg]
+988419408676654;1638917280528;40.228839930000;-111.634296760000;1388.8002;0.0000;-3000.0000;5.61654997;5.01167250;0.22022715;-1.00000000;
