@@ -1,0 +1,4 @@
+Sensor: bosch_bmp380 Pressure Sensor Non-wakeup
+Vendor: Bosch
+TimestampPres [ns]; Pres [mBar]
+2187234502388;849.6362;
