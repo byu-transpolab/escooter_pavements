@@ -11,6 +11,7 @@ _bookdown_files/
 
 rosm.cache/
 
+target/
 _targets/
 
 data/MM_NetworkDataset_06032021.gdb/

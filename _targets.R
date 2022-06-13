@@ -20,7 +20,7 @@ source("R/join_segments_data.R")
 
 
 bounding_box <- "data/provo_bb.geojson"
-output_folder <- "data/provo_bikes"
+network_folder <- "data/provo_bikes"
 
 
 # Targets necessary to build your data and run your model
@@ -31,7 +31,7 @@ data_targets <- list(
              format = "file"),
   tar_target(bb,  st_read(bounding_box)),
   tar_target(linknodes, extract_roads(bb, gdb)),
-  tar_target(write, write_linknodes(linknodes, output_folder,26912), 
+  tar_target(write, write_linknodes(linknodes, network_folder,26912), 
              format = "file"),
   
   # targets to make pavement data ---------
