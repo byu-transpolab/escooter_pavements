@@ -11,6 +11,7 @@ library(tidyverse)
 library(knitr)
 library(kableExtra)
 library(modelsummary)
+library(DiagrammeR)
 
 options(dplyr.summarise.inform = FALSE)
 
@@ -46,29 +47,49 @@ usually involves a discussion about both the data you used and the models you
 applied.
 
 ## Data
+```{r pipeline}
+grViz(diagram = "
+digraph boxes_and_circles {
 
-Discuss where you got your data, how you cleaned it, any assumptions you made.
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10]
 
-```{r load_data}
-data("Car", package = "mlogit")
-car_mlogit <- Car %>%
-  mutate(choice = gsub("choice", "", choice)) %>%
-  dfidx( varying = 5:70, shape = "wide", choice = "choice", sep = "")
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  'Multimodal Network'; Pavement;  Rides;  'Attributed Network';
+  'Elevation Data'; 'Chosen Path'; 
+  'Alternate Path 1'; 
+  'Alternate Path 2'; 
+  'Alternate Path 3'; 
+  'Estimation Data';
+
+  node [shape = circle,
+        color = blue,
+        fixedsize = true,
+        width = 0.9] // sets as circles
+  R5; FMM;
+
+  # several 'edge' statements
+  'Multimodal Network' -> 'Attributed Network'
+  'Pavement' -> 'Attributed Network'
+  'Attributed Network' -> R5
+  'Attributed Network' -> FMM
+  'Elevation Data' -> R5
+   FMM -> 'Chosen Path' [color = blue]
+   Rides -> FMM [color = blue]
+   R5 -> 'Alternate Path 1' [color = red]
+   R5 -> 'Alternate Path 2' [color = green]
+   R5 -> 'Alternate Path 3' [color = teal]
+   'Chosen Path' -> 'Estimation Data' [color = blue]
+   'Alternate Path 1' -> 'Estimation Data' [color = red]
+   'Alternate Path 2' -> 'Estimation Data' [color = green]
+   'Alternate Path 3' -> 'Estimation Data' [color = teal]
+}
+")
 ```
 
-Often there will be a table describing summary statistics of your dataset.
-Table \@ref(tab:datasummary) shows a nice table using the [`datasummary`](https://vincentarelbundock.github.io/modelsummary/articles/datasummary.html) 
-functions in the `modelsummary` package.
 
-```{r datasummary}
-datasummary_balance(
-  ~type, 
-  data = car_mlogit %>% 
-    select(type, fuel, price, range, size), 
-  dinm = FALSE,
-  title = "Descriptive Statistics of Dataset"
-  )
-```
 
 ## Models
 
