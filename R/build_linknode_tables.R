@@ -81,6 +81,15 @@ extract_roads <- function(bb, gdb_path){
         Oneway == "TF" ~ 1, # link goes in drawn order
         Oneway == "" ~ 2    # link goes against drawn order!
       ),
+      type = dplyr::case_when(
+        AutoNetwork == "N" & PedNetwork == "Y" ~ "footway",
+        CartoCode == "3 US Highways, Unseparated" ~ "trunk",
+        CartoCode %in% c("5 Major State Highways, Unseparated",
+                         "6 Other State Highways (Institutional)") ~ "primary",
+        CartoCode == "8 Major Local Roads, Paved" ~ "secondary",
+        CartoCode == "10 Other Federal Aid Eligible Local Roads" ~ "tertiary",
+        CartoCode == "11 Other Local, Neighborhood, Rural Roads" ~ "residential"
+      ),
       length = Length_Miles,
       speed = Speed, 
       bikelane_l = ifelse(BIKE_L == "", "none", BIKE_L),
@@ -123,8 +132,8 @@ extract_roads <- function(bb, gdb_path){
       a = new_b,
       b = new_a,
       bikelane = bikelane_l
-    )  %>%
-    select(link_id, a, b, aadt, speed, length, bikelane)
+    )  |>
+    dplyr::select(link_id, a, b, aadt, speed, length, bikelane, type)
     
     
   # If the link is a two-way link, create another link in the reverse direction
@@ -140,17 +149,18 @@ extract_roads <- function(bb, gdb_path){
       bikelane = bikelane_l,
       aadt = aadt / 2
     ) %>%
-    select(link_id, a, b, aadt, speed, length, bikelane)
+    dplyr::select(link_id, a, b, aadt, speed, length, bikelane, type)
   
   # forward direction of two-way links
   my_forward_links <- mylinks %>%
     filter(oneway == "0") %>%
-    transmute(link_id, a, b, aadt = aadt / 2, speed, length, bikelane = bikelane_r)
+    dplyr::transmute(link_id, a, b, aadt = aadt / 2, speed, length, 
+                      bikelane = bikelane_r, type)
   
   # standard one-way link directions
   my_normal_links <- mylinks %>%
     filter(oneway == "1") %>%
-    transmute(link_id, a, b, aadt, speed, length, bikelane = bikelane_r)
+    dplyr::transmute(link_id, a, b, aadt, speed, length, bikelane = bikelane_r, type)
   
   # remove any nodes that are not part of link endpoints
   mynodes <- nodes %>% 
