@@ -31,8 +31,10 @@ data_targets <- list(
              format = "file"),
   tar_target(bb,  st_read(bounding_box)),
   tar_target(linknodes, extract_roads(bb, gdb)),
-  tar_target(write, write_linknodes(linknodes, network_folder,26912), 
+  tar_target(write, write_linknodes(linknodes, "data/r5",26912), 
              format = "file"),
+  tar_target(lib, "lib/links2osm-1.0-SNAPSHOT.jar", format = "file"),
+  tar_target(osmpbf, write_osmpbf(lib, write)),
   
   # targets to make pavement data ---------
   tar_target(links_pavements, make_link_pavement_data("data/pavement_data/")),

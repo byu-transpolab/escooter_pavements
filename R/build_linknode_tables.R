@@ -238,4 +238,32 @@ write_linknodes <- function(linknodes, folder, epsg){
 }
 
 
+#' Write the OSM PBF object from the link and nodes tables.
+#' 
+#' @param lib Path to Java JAR file
+#' @param geojson Path to geojson object in folder with link and nodes
+#'   tables. 
+#'   
+#' @details This step calls a command in Java; you must have java 11 set as your JRE
+#'   by editing your local .Renviron file to contain the following line:
+#'   
+#'   JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home"
+#'   
+#'   Replacing the path with the path to your locally installed Java 11. You
+#'   will need to restart R after editing this file.
+#'   
+#'   Additionally, the geojson is used to get the location where the network  
+#'   links and node tables are stored; this is what is returned from the previous
+#'   target, so it is a useful handle for us here.
+write_osmpbf <- function (lib, geojson) {
+  folder <- dirname(geojson)
+  
+  
+  system2("java", args = c("-jar", lib, 
+                           file.path(folder, "links.csv"), # links file
+                           file.path(folder, "nodes.csv"), # nodes files
+                           file.path(folder, "network.osm.pbf") # output file
+                           )
+          )
+}
 
