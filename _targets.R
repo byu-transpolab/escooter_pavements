@@ -15,6 +15,7 @@ tar_option_set(packages = c("tidyverse", "bookdown", "sf"))
 # if you keep your functions in external scripts.
 source("R/pavement_data.R")
 source("R/figures.R")
+source("R/join_points_and_segments.R")
 source("R/build_linknode_tables.R")
 source("R/join_segments_data.R")
 
@@ -26,20 +27,34 @@ network_folder <- "data/provo_bikes"
 # Targets necessary to build your data and run your model
 data_targets <- list(
   
-  # targets to make the provo bike shapefile and geojsons -------
+  # targets to make the provo bike shapefile and geojsons ========
+  # This downloads a geodatabase extracted from UDOT
   tar_target(gdb, download_gdb("data/MM_NetworkDataset_06032021.gdb"), 
              format = "file"),
+  # this is a bounding box so we can just get network links in Provo
   tar_target(bb,  st_read(bounding_box)),
+  # this reads the GDB, extracts links in the bounding box, and processes them
+  # into a link / node list. 
   tar_target(linknodes, extract_roads(bb, gdb)),
+  # this writes outs the link node list into a folder and some other 
+  # files for further work
   tar_target(write, write_linknodes(linknodes, "data/r5",26912), 
              format = "file"),
+  
+  # this downloads a java application that converts link / node
+  # tables (in the files we just wrote into an OSM pbf file.
   tar_target(lib, "lib/links2osm-1.0-SNAPSHOT.jar", format = "file"),
   tar_target(osmpbf, write_osmpbf(lib, write)),
   
-  # targets to make pavement data ---------
-  tar_target(links_pavements, make_link_pavement_data("data/pavement_data/")),
+  # targets to make pavement data =========================
+  # this reads all of the scooter data we collected 
+  tar_target(ride_data, make_link_pavement_data("data/pavement_data/")),
   
-  tar_target(all_points_sf, make_point_sf(links_pavements))
+  # this target is a sf object of all the ride points we took.
+  tar_target(all_points_sf, make_point_sf(ride_data)),
+  # get a table that has the link associated with every ride point
+  tar_target(ride_point_links, get_links_of_points(linknodes$links, all_points_sf, 
+                                                   distance = 25))
 )
 
 
