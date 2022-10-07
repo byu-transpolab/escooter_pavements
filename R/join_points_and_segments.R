@@ -6,18 +6,19 @@
 #' 
 #' @return A points sf with the link identified
 #' 
-get_links_of_points <- function(links, all_points_sf, distance = 25) {
+get_links_of_points <- function(links, all_points_sf, distance = -25) {
   
-  links <- sample_frac(links, 0.02)
+  #links <- sample_frac(links, 0.02)
+  
   
   # buffer the links  ==== 
   buffer <- links %>%
     st_transform(2281) %>% # central utah USFT
-    st_buffer(dist = distance)
+    st_buffer(dist = distance, singleSide = TRUE)
   
   # spatial join the points to the buffers
   points <- all_points_sf %>%
-    sample_frac(0.1) %>%
+    #sample_frac(0.1) %>%
     st_transform(2281) %>% # central utah US FT
     st_join(buffer %>% select(link_id))
   

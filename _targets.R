@@ -18,7 +18,7 @@ source("R/figures.R")
 source("R/join_points_and_segments.R")
 source("R/build_linknode_tables.R")
 source("R/join_segments_data.R")
-
+source("R/acc_data.R")
 
 bounding_box <- "data/provo_bb.geojson"
 network_folder <- "data/provo_bikes"
@@ -49,6 +49,8 @@ data_targets <- list(
   # targets to make pavement data =========================
   # this reads all of the scooter data we collected 
   tar_target(ride_data, make_link_pavement_data("data/pavement_data/")),
+  # this reads all the acc data processed by Dr. Mazeo
+  tar_target(acc_data,make_acc_pavement_data("data/pavement_data/")),
   
   # this target is a sf object of all the ride points we took.
   tar_target(all_points_sf, make_point_sf(ride_data)),
