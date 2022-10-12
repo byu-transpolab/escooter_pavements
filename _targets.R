@@ -50,7 +50,7 @@ data_targets <- list(
   # this reads all of the scooter data we collected 
   tar_target(ride_data, make_link_pavement_data("data/pavement_data/")),
   # this reads all the acc data processed by Dr. Mazeo
-  tar_target(acc_data,make_acc_pavement_data("data/pavement_data/")),
+  tar_target(acc_data,make_acc_pavement_data("data/pavement_data/process_acceleration")),
   
   # this target is a sf object of all the ride points we took.
   tar_target(all_points_sf, make_point_sf(ride_data)),

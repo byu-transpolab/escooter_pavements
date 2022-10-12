@@ -23,10 +23,10 @@ make_acc_pavement_data <- function(acc_data){
 #' @details 
 #' 
 read_acc_scooter_recorder <- function(path){
-  files <- list.files(path, full.names = TRUE)
+  #files <- list.files(path, full.names = TRUE)
   
   # read ACC files
-  acc <- read_acc(files[grepl("proccessed.csv", files)])
+  acc <- read_acc(path[grepl("proccessed.csv", path)])
   
   
 
@@ -52,7 +52,7 @@ read_acc <- function(file){
     acc <- acc %>%
       mutate(
         timestamp = as.numeric(timestamp),
-        timestamp = as.POSIXct((timestamp+0.1)/1000, origin = "1970-01-01")
+        #timestamp = as.POSIXct((timestamp+0.1)/1000, origin = "1970-01-01")
       )
   }
   
