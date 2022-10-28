@@ -56,7 +56,7 @@ read_gnss <- function(file){
   } else {
     gnss <- gnss %>%
     mutate(
-      timestamp = as.character(timestamp),
+      timestamp = as.numeric(timestamp),
       timestampUTC = as.POSIXct((timestampUTC+0.1)/1000, origin = "1970-01-01")
     )
   }

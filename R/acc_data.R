@@ -8,11 +8,11 @@
 #' 
 make_acc_pavement_data <- function(acc_data){
   
-  acc_sets <- dir(acc_data)
+  acc_sets <- dir(acc_data, ".csv")
   
   acc__data <- lapply(acc_sets, function(set){
- +
       read_acc_scooter_recorder(file.path(acc_data, set))
+  
   })
   
 }
@@ -26,7 +26,7 @@ read_acc_scooter_recorder <- function(path){
   #files <- list.files(path, full.names = TRUE)
   
   # read ACC files
-  acc <- read_acc(path[grepl("proccessed.csv", path)])
+  acc <- read_acc(path)
   
   
 
@@ -60,3 +60,11 @@ read_acc <- function(file){
 }
 
 
+#combine into one list
+
+combine_acc <- function(acc_list){
+  acc_list <- bind_rows(acc_list)
+  names(acc_list) <- c("timestamp", "metric")
+  
+  acc_list$timestamp
+}
