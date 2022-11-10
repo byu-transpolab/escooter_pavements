@@ -9,7 +9,7 @@ make_point_sf <- function(links_pavements){
   lapply(links_pavements, function(x){
     if(nrow(x$gnss) > 0){
       x$gnss %>%
-        select(timestamp,timestampUTC, lat, lng) %>%
+        select(timestamp,timestampUTC, lat, lng, folder) %>%
         st_as_sf(coords = c("lng", "lat"), crs = 4326)
     }
   }) %>%

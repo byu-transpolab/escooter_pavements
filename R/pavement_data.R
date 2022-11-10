@@ -28,8 +28,7 @@ read_scooter_recorder <- function(path){
   gnss <- read_gnss(files[grepl("GNSS.csv", files)])
   
   
-  # TODO: read other files, and add them to output lists
-  #acc <- read_acc(files[grepl("Acc.csv", files)])
+
   
   list(
     "gnss" = gnss
@@ -37,11 +36,9 @@ read_scooter_recorder <- function(path){
 }
 
 
-# TODO: write other functions to read other files and clean them up.
 
 #' Read the gnss file from the scooter path
 read_gnss <- function(file){
-  
   # [1] "TimestampGNSS [ns]" " UTC time [ms]"     " Lat [deg]"         " Lon [deg]"        
   # [5] " Height [m]"        " Speed [m/s]"       " Heading [deg]"     " Hor Acc [m]"      
   # [9] " Vert Acc [m]"      " Speed Acc [m/s]"   " Heading Acc [deg]"
@@ -57,6 +54,8 @@ read_gnss <- function(file){
     gnss <- gnss %>%
     mutate(
       timestamp = as.numeric(timestamp),
+      folder = substr(file, 21, 35), 
+      
       timestampUTC = as.POSIXct((timestampUTC+0.1)/1000, origin = "1970-01-01")
     )
   }
