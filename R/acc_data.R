@@ -52,7 +52,7 @@ read_acc <- function(file){
     acc <- acc %>%
       mutate(
         timestamp = as.numeric(timestamp),
-        folder = substr(file, 27, 41),
+        folder = as.numeric(gsub("_",".",substr(file, 27, 41))),
         #timestamp = as.POSIXct((timestamp+0.1)/1000, origin = "1970-01-01")
       )
   }

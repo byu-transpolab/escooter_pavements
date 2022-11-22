@@ -54,7 +54,7 @@ read_gnss <- function(file){
     gnss <- gnss %>%
     mutate(
       timestamp = as.numeric(timestamp),
-      folder = substr(file, 21, 35), 
+      folder = as.numeric(gsub("_",".",substr(file, 21, 35))), 
       
       timestampUTC = as.POSIXct((timestampUTC+0.1)/1000, origin = "1970-01-01")
     )

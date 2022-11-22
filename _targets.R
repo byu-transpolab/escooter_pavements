@@ -19,6 +19,7 @@ source("R/join_points_and_segments.R")
 source("R/build_linknode_tables.R")
 source("R/join_segments_data.R")
 source("R/acc_data.R")
+source("R/Interpolate_acc_metric.R")
 
 bounding_box <- "data/provo_bb.geojson"
 network_folder <- "data/provo_bikes"
@@ -57,9 +58,12 @@ data_targets <- list(
   
   # this target is a sf object of all the ride points we took.
   tar_target(all_points_sf, make_point_sf(ride_data)),
+  #this target interporlates the ACC data with the GNSS
+  tar_target(all_points_gnss, Search_acc_metric(all_points_sf,acc_data)),
   # get a table that has the link associated with every ride point
   tar_target(ride_point_links, get_links_of_points(linknodes$links, all_points_sf, 
                                                    distance = 25))
+  
 )
 
 
