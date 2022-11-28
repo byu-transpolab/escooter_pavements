@@ -10,25 +10,26 @@
 
 Search_acc_metric <- function(points_sf,acc_data_set){
   
-  #filter out timestamps that are not in the range of the acceleration data
-  range_points <- points_sf # %>% filter(timestamp > min(acc_data_set$timestamp), 
-  #timestamp < max(acc_data_set$timestamp))
+  # filter out folders that are not in the range of the acceleration data
+  range_points <- points_sf  %>% filter(points_sf$folder %in% acc_data_set$folder)
   
-  
+  # add column for acc metric 
   range_points$metric <- NA
+
+  
 #' search and find gnss and acc metric
 #' 
 #' 
 #'    
 #'    
   interpolate_acc <- function(range_gnss,acc_set_data){
-    browser()
+    #browser()
     #find folder
     sample<- acc_set_data %>%
-      filter(acc_set_data$folder == range_gnss$folder)
+      filter(acc_set_data$folder %in% range_gnss$folder)
     
     #get row number of closest match
-    j <- which.min(abs(sample$timestamp - range$timestamp))
+    j <- which.min(abs(sample$timestamp - range_gnss$timestamp))
     if(j == nrow(sample)){
       ym1<- sample$metric[j-1]
       y0 <- sample$metric[j]
@@ -48,7 +49,8 @@ Search_acc_metric <- function(points_sf,acc_data_set){
     }
   }
   #lapply 
-  gnss_metric <- apply(range_points,interpolate_acc, margin=1, acc_set_dat = acc_data_set)
+  
+  gnss_metric <- apply(range_points,FUN = interpolate_acc, MARGIN =1, acc_set_data = acc_data_set)
   
   #Margin = 1
   #tapply
