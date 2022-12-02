@@ -29,3 +29,4 @@ make_point_map <- function(all_points_sf, leaflet = FALSE){
   
   
 }
+
