@@ -18,10 +18,10 @@ make_point_sf <- function(links_pavements){
 }
 
 
-make_point_map <- function(all_points_sf, leaflet = FALSE){
+make_point_map <- function(all_points_gnss, leaflet = FALSE){
   
   if(leaflet){
-    leaflet(all_points_sf) %>%
+    leaflet(all_points_gnss) %>%
       addProviderTiles(providers$CartoDB.Positron) %>%
       addCircles()
   }
@@ -30,3 +30,10 @@ make_point_map <- function(all_points_sf, leaflet = FALSE){
   
 }
 
+make_gnss_acc_map <- function (ride_point_links) {
+  sf <- sf <- st_as_sf(ride_point_links, coords = c("lng", "lat"), crs = 4326) 
+  
+  ggplot(sf, aes(color = metric)) +
+    geom_sf () +
+    scale_color_viridis(discrete =FALSE, option = "C")
+}

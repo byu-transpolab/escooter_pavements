@@ -12,7 +12,7 @@ Search_acc_metric <- function(points_sf,acc_data_set){
   
   # filter out folders that are not in the range of the acceleration data
   range_points <- points_sf  %>% 
-    sample_frac(size = .01) %>%
+    #sample_frac(size = .01) %>%
     filter(folder %in% acc_data_set$folder)
   
   # add column for acc metric 
@@ -28,11 +28,11 @@ Search_acc_metric <- function(points_sf,acc_data_set){
 
   
   
-  make_points_gnss(gnss_metric)
+  #make_points_gnss(gnss_metric)
     
  
   
-
+range_points
   
 }
 

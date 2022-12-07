@@ -61,7 +61,7 @@ data_targets <- list(
   #this target interporlates the ACC data with the GNSS
   tar_target(all_points_gnss, Search_acc_metric(all_points_sf,acc_data)),
   # get a table that has the link associated with every ride point
-  tar_target(ride_point_links, get_links_of_points(linknodes$links, all_points_sf, 
+  tar_target(ride_point_links, get_links_of_points(linknodes$links, all_points_gnss, 
                                                    distance = 25))
   
 )
