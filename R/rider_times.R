@@ -2,38 +2,40 @@
 #library(lubridate)
 #library(purrr)
 # Make Timestamps Equation
-make_timestamps <- function(start, end){
-  ##browser() 
-   # How many seconds within the time is given through this difftime function
-  length <- as.numeric(difftime(end, start, units = "secs"))
+make_timestamps <- function(start_stamp, end_stamp){
+  #browser() 
+  # How many seconds within the time is given through this difftime function
+  length <- as.numeric(difftime(end_stamp, start_stamp, units = "secs"))
   # Times is created as an empty list
   timestampUTC <- c()
   # Start loop at 1
-  timestampUTC[1] <- start
+  timestampUTC[1] <- as.POSIXct(start_stamp)
   # Loop for creating new rows for each second
   for(i in 1:length + 1){
     timestampUTC[i] <- timestampUTC[i - 1] + 1
   }
   # Times are converted to datetimes
-  as_datetime(timestampUTC)
+  as.POSIXct(timestampUTC, origin ="1970-01-01")
 }
 
 # Make Rider Tibble Function
 make_ridertibble <- function(start,end,name_r){
-  
+  #browser()
   # Start and End Times are given along with Rider Name
-  start_time <- as_datetime(start)
-  end_time <- as_datetime(end)
+  start_time <- as.POSIXct(start)
+  end_time <- as.POSIXct(end)
  # rname <- as.character(c("Nicole & Dylan","Nicole & Dylan","Nicole & Dylan","Nicole & Dylan","Nicole & Dylan","Dylan & Liv","Nicole & Dylan","Nicole & Dylan","Dylan & Liv","Nicole & Dylan","Nicole & Dylan","Stephen","Stephen","Jonathon & Nicole","Jonathon","Jonathon","Jonathon","Nicole","Nicole","Jonathon"))
   
   
   # Tibble is created
-  ridertib <- tibble(starttime,
-                     endtime,
+  ridertib <- tibble(start_time,
+                     end_time,
                      rider = c(rname))
   # Rider is assigned to each second
+  
+  #ridertib$timestampUTC <- unlist(apply(start_time, FUN = make_timestamps, MARGIN = 1, end_stamp = end_time))
   ridertib %>% 
-    mutate(timestampUTC = map2(starttime, endtime, make_timestamps)) %>% 
+    mutate(timestampUTC = map2(start_time, end_time, make_timestamps)) %>% 
     unnest(timestampUTC)
 }
 
@@ -45,5 +47,5 @@ make_ridertibble <- function(start,end,name_r){
 
 #merge rider tibble with all_points_sf
 rider_merge<- function(chart_rider,all_points){
-  join <- full_join(chart_rider,all_points, by="timestampUTC")
+  join <- left_join(all_points, chart_rider,by="timestampUTC")
 }

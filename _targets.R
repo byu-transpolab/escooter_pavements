@@ -8,7 +8,7 @@ library(tarchetypes)
 # and tar_read(summary) to view the results.
 
 # Set target-specific options such as packages.
-tar_option_set(packages = c("tidyverse", "bookdown", "sf", "lubridate", "purrr"))
+tar_option_set(packages = c("tidyverse", "bookdown", "sf", "lubridate", "purrr","viridis"))
 
 # Define custom functions and other global objects.
 # This is where you write source(\"R/functions.R\")
@@ -67,17 +67,13 @@ data_targets <- list(
   #this target interpolates the ACC data with the GNSS
   tar_target(all_points_gnss, Search_acc_metric(all_points_sf,acc_data)),
   # get a table that has the link associated with every ride point
-<<<<<<< HEAD
-  tar_target(ride_point_links, get_links_of_points(linknodes$links, all_points_gnss, 
-                                                   distance = 25))
+
+  tar_target(ride_point_links, get_links_of_points(linknodes$links, all_points_gnss,distance = 25)),
   
-=======
-  tar_target(ride_point_links, get_links_of_points(linknodes$links, all_points_sf, 
-                                                   distance = 25)),
   # merge all_points_sf and rider_chart 
   tar_target(rider_chart, make_ridertibble(starttime,endtime,rname)),
-  tar_target(rider_times, rider_merge(rider_chart,all_points_gnss)),
->>>>>>> a04ed5e9c96931450e5ef7ddbe93953929563ee4
+  tar_target(rider_times, rider_merge(rider_chart,ride_point_links))
+
 )
 
 
