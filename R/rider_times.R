@@ -47,5 +47,6 @@ make_ridertibble <- function(start,end,name_r){
 
 #merge rider tibble with all_points_sf
 rider_merge<- function(chart_rider,all_points){
-  join <- left_join(all_points, chart_rider,by="timestampUTC")
+  join <- full_join(all_points, chart_rider,by="timestampUTC")
+  join
 }
