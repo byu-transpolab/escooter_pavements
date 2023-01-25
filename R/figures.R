@@ -31,9 +31,15 @@ make_point_map <- function(all_points_gnss, leaflet = FALSE){
 }
 
 make_gnss_acc_map <- function (ride_point_links) {
-  sf <- sf <- st_as_sf(ride_point_links, coords = c("lng", "lat"), crs = 4326) 
+  sf <- st_as_sf(ride_point_links, coords = c("lng", "lat"), crs = 4326) 
+  pal<- colorNumeric("Blues", sf$metric, na.color = NA)
   
-  ggplot(sf, aes(color = metric)) +
-    geom_sf () +
-    scale_color_viridis(discrete =FALSE, option = "C")
+  leaflet(sf %>% st_transform(4326)) %>%
+    addProviderTiles(providers$Esri.WorldGrayCanvas) %>%
+    addLegend("bottomright",pal = pal, values = ~metric, title = "Acceleration Metric") %>%
+    addCircleMarkers(color = ~pal(metric), radius = 1,popup = ~htmlEscape(metric))
+  
+ # ggplot(sf, aes(color = metric)) +
+   # geom_sf () +
+    # scale_color_viridis(discrete =FALSE, option = "C")
 }
