@@ -8,7 +8,7 @@ library(tarchetypes)
 # and tar_read(summary) to view the results.
 
 # Set target-specific options such as packages.
-tar_option_set(packages = c("tidyverse", "bookdown", "sf", "lubridate", "purrr","viridis"))
+tar_option_set(packages = c("tidyverse", "bookdown", "sf", "lubridate", "purrr","viridis","reticulate","zeallot"))
 
 # Define custom functions and other global objects.
 # This is where you write source(\"R/functions.R\")
@@ -21,9 +21,17 @@ source("R/join_segments_data.R")
 source("R/acc_data.R")
 source("R/Interpolate_acc_metric.R")
 source("R/rider_times.R")
+source("R/acc_process.R")
 
 bounding_box <- "data/provo_bb.geojson"
 network_folder <- "data/provo_bikes"
+
+# Import the python functions
+scipy <- import("scipy", convert = TRUE)
+argparse <- import("argparse", convert = TRUE)
+np <- import("numpy", convert = TRUE)
+plt <- import ("matplotlib", convert = TRUE)
+subprocess <- import ("subprocess", convert = TRUE)
 
 # Start and End Times are given along with Rider Name
 starttime <- c("2021-07-15 13:19:00","2021-08-13 14:22:00","2021-08-27 14:20:00","2021-09-02 14:18:00","2021-09-28 11:47:00","2021-09-30 11:51:00","2021-10-01 13:59:00","2021-10-05 11:27:00","2021-10-15 15:31:00","2021-10-16 8:52:00","2021-10-28 11:34:00","2021-10-30 9:13:00","2021-11-04 11:23:00","2021-11-05 14:37:00","2021-11-06 8:32:00","2021-11-13 6:40:00","2021-11-16 11:24:00","2021-11-18 11:27:00","2021-11-20 8:03:00","2021-11-30 11:36:00","2021-12-04 8:27:00","2021-12-07 11:28:00","2022-01-15 19:08:00","2022-01-16 17:36:00","2022-05-16 17:55:00","2022-05-21 08:00:00", "2022-05-27 07:44:00","2022-05-28 07:31:00","2022-05-28 08:50:00","2022-06-03 07:44:00", "2022-06-04 08:46:00")
@@ -58,7 +66,8 @@ data_targets <- list(
   # this reads all of the scooter data we collected 
   tar_target(ride_data, make_link_pavement_data("data/pavement_data/")),
   # this reads all the acc data processed by Dr. Mazeo
-  tar_target(acc_list,make_acc_pavement_data("data/process_acceleration")),
+  tar_target(acc_list, make_acc_data("data/pavement_data/")),
+  #tar_target(acc_list,make_acc_pavement_data("data/process_acceleration")),
   #this combines the acc_data into one list
   tar_target(acc_data, combine_acc(acc_list)),
   
