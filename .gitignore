@@ -19,3 +19,7 @@ data/MM_NetworkDataset_06032021.gdb/
 data/r5/
 
 .Renviron
+
+data/october_2019_gpspoints.json
+
+R/working_file_dylan.R

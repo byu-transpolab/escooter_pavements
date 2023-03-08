@@ -6,7 +6,7 @@ library(lubridate)
 # Download raw data file =================================
 gps_points <- "data/october_2019_gpspoints.json"
 if (!file.exists(gps_points)) {
-  box <- null # redacted private data link
+  box <- null  # redacted private data link
   download.file(box, gps_points)
 }
 
