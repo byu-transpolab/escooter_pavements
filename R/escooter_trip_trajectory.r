@@ -35,3 +35,9 @@ projected <- st_as_sf(df2, coords = c("location_lon", "location_lat"), crs = 432
 projected <- st_transform(projected, 3566)
 
 write_rds(projected, "data/projected_points.rds")
+
+
+sf::st_write(projected, "fmm/escooter_data/trips.shp")
+sf::st_write(projected, "fmm/escooter_data/trips_points.csv", layer_options = "GEOMETRY=AS_XY")
+readr::write_csv( projected |> sf::st_set_geometry(projected$geometry), 
+                 file.path("fmm/escooter_data/trips_points.csv"))
